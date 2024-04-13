@@ -249,27 +249,20 @@
     [1, 1, 4, 1]                 // 東區
   ];
   // Calculate weighted scores for each region
-  const weightedScores = regions.map((region, index) => {
-    let totalWeightedScore = 0;
-    for (let i = 0; i < region.individuals.length; i++) {
-      const individualScore = entranceThresholdScores[index][i] + teacherQualityScores[index][i] + entertainmentScores[index][i] + internalResourcesScores[index][i] + housingPricesScores[index][i] + schoolReputationScores[index][i] + industryCollaborationScores[index][i];
-      totalWeightedScore += factors[index] * individualScore;
-    }
-    return { name: region.name, totalWeightedScore };
+  const maxWeightedScores = regions.map((region, index) => {
+    const originalScores = region.individuals.map((individual, idx) => {
+      const individualScore = entranceThresholdScores[index * 7 + idx] * teacherQualityScores[index * 7 + idx] * entertainmentScores[index * 7 + idx] * internalResourcesScores[index * 7 + idx] * housingPricesScores[index * 7 + idx] * schoolReputationScores[index * 7 + idx] * industryCollaborationScores[index * 7 + idx];
+      return individualScore;
+    });
+    const maxWeightedScore = Math.max(...originalScores.map((score, idx) => score * factors[idx]));
+    return { name: region.name, maxWeightedScore };
   });
 
-  // Sort regions by weighted scores
-  weightedScores.sort((a, b) => b.totalWeightedScore - a.totalWeightedScore);
-
-  // Display top three regions for each
+  // Display recommended universities for each region
   const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "<h2>地區推薦大學：</h2>";
-  regions.forEach(region => {
-    resultsDiv.innerHTML += `<h3>${region.name}</h3>`;
-    const topThree = weightedScores.filter(score => score.name === region.name).slice(0, 3);
-    topThree.forEach((entry, index) => {
-      resultsDiv.innerHTML += `<p>${index + 1}. ${region.individuals[weightedScores.findIndex(item => item.name === region.name && item.totalWeightedScore === entry.totalWeightedScore)]}</p>`;
-    });
+  resultsDiv.innerHTML = "<h2>各地區推薦大學：</h2>";
+  maxWeightedScores.forEach(region => {
+    resultsDiv.innerHTML += `<p>${region.name}: ${regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals[regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === entranceThresholdScores[maxWeightedScores.findIndex(item => item.name === region.name) * 7 + regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === item.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === entranceThresholdScores[maxWeightedScores.findIndex(item => item.name === region.name) * 7 + regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === item.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === entranceThresholdScores[maxWeightedScores.findIndex(item => item.name === region.name) * 7 + regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === item.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === entranceThresholdScores[maxWeightedScores.findIndex(item => item.name === region.name) * 7 + regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === item.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === entranceThresholdScores[maxWeightedScores.findIndex(item => item.name === region.name) * 7 + regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === item.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === Math.max(...originalScores.map((score, idx) => score * factors[idx]))]))]))))]))))]}</p>`;
   });
 }
 
