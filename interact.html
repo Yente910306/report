@@ -48,7 +48,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>地區分析器</title>
+  <title>大學分析</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -267,7 +267,7 @@
 
   // Display top three regions for each
   const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "<h2>各地區前三名：</h2>";
+  resultsDiv.innerHTML = "<h2>地區推薦大學：</h2>";
   regions.forEach(region => {
     resultsDiv.innerHTML += `<h3>${region.name}</h3>`;
     const topThree = weightedScores.filter(score => score.name === region.name).slice(0, 3);
