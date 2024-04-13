@@ -576,3 +576,35 @@ ul.list li h5 + img {
 	margin: 0;
 	text-align: center;
 }
+/* 新样式开始 */
+#result {
+  display: none;
+  margin-top: 20px;
+}
+
+#result-text {
+  font-weight: bold;
+}
+/* 新样式结束 */
+/* 将现有样式添加到新样式之间 */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+/* 新样式结束 */
