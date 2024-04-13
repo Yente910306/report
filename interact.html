@@ -181,7 +181,7 @@
   </div>
 
   <script>
-    function calculate() {
+     function calculate() {
   // Get factors' values
   const factors = [];
   for (let i = 1; i <= 7; i++) {
@@ -218,20 +218,27 @@
   const industryCollaborationScores = [3, 3, 3, 4, 2, 3, 3, 2, 1, 4, 1, 3, 2, 3, 3, 1, 1, 1, 2, 4, 5, 3, 2, 2, 5, 3, 2, 1, 2, 3];
 
   // Calculate weighted scores for each region
-  const maxWeightedScores = regions.map((region, index) => {
-    const originalScores = region.individuals.map((individual, idx) => {
-      const individualScore = entranceThresholdScores[index * 7 + idx] * teacherQualityScores[index * 7 + idx] * entertainmentScores[index * 7 + idx] * internalResourcesScores[index * 7 + idx] * housingPricesScores[index * 7 + idx] * schoolReputationScores[index * 7 + idx] * industryCollaborationScores[index * 7 + idx];
-      return individualScore;
-    });
-    const maxWeightedScore = Math.max(...originalScores.map((score, idx) => score * factors[idx]));
-    return { name: region.name, maxWeightedScore };
+  const weightedScores = regions.map((region, index) => {
+    const originalScore = region.individuals.length;
+    const weightedScore = factors.reduce((acc, factor, i) => {
+      const individualScore = entranceThresholdScores[index * 7 + i] * teacherQualityScores[index * 7 + i] * entertainmentScores[index * 7 + i] * internalResourcesScores[index * 7 + i] * housingPricesScores[index * 7 + i] * schoolReputationScores[index * 7 + i] * industryCollaborationScores[index * 7 + i];
+      return acc + (factor * originalScore * individualScore);
+    }, 0);
+    return { name: region.name, weightedScore };
   });
 
-  // Display recommended universities for each region
+  // Sort regions by weighted scores
+  weightedScores.sort((a, b) => b.weightedScore - a.weightedScore);
+
+  // Display top three regions for each
   const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "<h2>各地區推薦大學：</h2>";
-  maxWeightedScores.forEach(region => {
-    resultsDiv.innerHTML += `<p>${region.name}: ${regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals[regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === entranceThresholdScores[maxWeightedScores.findIndex(item => item.name === region.name) * 7 + regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === item.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === entranceThresholdScores[maxWeightedScores.findIndex(item => item.name === region.name) * 7 + regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === item.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === entranceThresholdScores[maxWeightedScores.findIndex(item => item.name === region.name) * 7 + regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === item.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === entranceThresholdScores[maxWeightedScores.findIndex(item => item.name === region.name) * 7 + regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === item.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === entranceThresholdScores[maxWeightedScores.findIndex(item => item.name === region.name) * 7 + regions[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.findIndex(item => item === item.filter(item => item !== undefined)[maxWeightedScores.findIndex(item => item.name === region.name)].individuals.filter(item => item !== undefined).find(item => maxWeightedScores[maxWeightedScores.findIndex(item => item.name === region.name)].maxWeightedScore === Math.max(...originalScores.map((score, idx) => score * factors[idx]))]))]))))]))))]}</p>`;
+  resultsDiv.innerHTML = "<h2>地區推薦大學：</h2>";
+  regions.forEach(region => {
+    resultsDiv.innerHTML += `<h3>${region.name}</h3>`;
+    const topThree = weightedScores.filter(score => score.name === region.name).slice(0, 3);
+    topThree.forEach((entry, index) => {
+      resultsDiv.innerHTML += `<p>${index + 1}. ${region.individuals[weightedScores.findIndex(item => item.name === region.name && item.weightedScore === entry.weightedScore)]}</p>`;
+    });
   });
 }
 
