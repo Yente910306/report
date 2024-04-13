@@ -232,7 +232,7 @@
 
   // Display top three regions for each
   const resultsDiv = document.getElementById("results");
-  resultsDiv.innerHTML = "<h2>各地區推薦大學：</h2>";
+  resultsDiv.innerHTML = "<h2>地區推薦大學：</h2>";
   regions.forEach(region => {
     resultsDiv.innerHTML += `<h3>${region.name}</h3>`;
     const topThree = weightedScores.filter(score => score.name === region.name).slice(0, 3);
