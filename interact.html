@@ -252,7 +252,7 @@
   const weightedScores = regions.map((region, index) => {
     let totalWeightedScore = 0;
     for (let i = 0; i < region.individuals.length; i++) {
-      const individualScore = entranceThresholdScores[index][i] * teacherQualityScores[index][i] * entertainmentScores[index][i] * internalResourcesScores[index][i] * housingPricesScores[index][i] * schoolReputationScores[index][i] * industryCollaborationScores[index][i];
+      const individualScore = entranceThresholdScores[index][i] + teacherQualityScores[index][i] + entertainmentScores[index][i] + internalResourcesScores[index][i] + housingPricesScores[index][i] + schoolReputationScores[index][i] + industryCollaborationScores[index][i];
       totalWeightedScore += factors[index] * individualScore;
     }
     return { name: region.name, totalWeightedScore };
