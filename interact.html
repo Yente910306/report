@@ -44,47 +44,41 @@
 		<div id="contents">
 			<div id="services">
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <title>地區評分互動頁面</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>地區分析器</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <div id="factors">
-            <h2>設定因素百分比</h2>
-            <div id="factorInputs">
-                <!-- JavaScript生成的因素百分比輸入 -->
-            </div>
-            <button onclick="calculateScores()">計算分數</button>
-        </div>
-        <div id="results" style="display: none;">
-            <h2>結果</h2>
-            <!-- JavaScript生成的結果顯示 -->
-        </div>
-        <!-- 隱藏的表格用於存儲原始數據 -->
-        <div id="dataEntry" style="display: none;">
-            <table id="dataTable">
-                <thead>
-                    <tr>
-                        <th>地區</th>
-                        <th>因素1</th>
-                        <th>因素2</th>
-                        <th>因素3</th>
-                        <th>因素4</th>
-                        <th>因素5</th>
-                        <th>因素6</th>
-                        <th>因素7</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- 這裡將通過JavaScript動態填充 -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <script src="script.js"></script>
+  <h1>地區分析器</h1>
+  <div id="selectors">
+    <label for="factor1">入學門檻：</label>
+    <input type="range" id="factor1" min="0" max="100" step="20" value="80">
+    <br>
+    <label for="factor2">師資：</label>
+    <input type="range" id="factor2" min="0" max="100" step="20" value="80">
+    <br>
+    <label for="factor3">校內資源：</label>
+    <input type="range" id="factor3" min="0" max="100" step="20" value="80">
+    <br>
+    <label for="factor4">學區周遭房價：</label>
+    <input type="range" id="factor4" min="0" max="100" step="20" value="80">
+    <br>
+    <label for="factor5">產業合作：</label>
+    <input type="range" id="factor5" min="0" max="100" step="20" value="80">
+    <br>
+    <label for="factor6">學校聲望：</label>
+    <input type="range" id="factor6" min="0" max="100" step="20" value="80">
+    <br>
+    <label for="factor7">附近娛樂：</label>
+    <input type="range" id="factor7" min="0" max="100" step="20" value="80">
+  </div>
+  <button onclick="calculate()">計算</button>
+  <div id="results"></div>
+
+  <script src="script.js"></script>
 </body>
 </html>
 
